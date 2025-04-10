@@ -1,0 +1,77 @@
+{
+  "name": "@2bad/edando",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "template",
+    "typescript",
+    "starter"
+  ],
+  "homepage": "https://github.com/2BAD/edando#readme",
+  "bugs": {
+    "url": "https://github.com/2BAD/edando/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2BAD/edando.git"
+  },
+  "license": "MIT",
+  "author": "2BAD (https://github.com/2BAD)",
+  "contributors": [
+    {
+      "name": "Jason Hyde",
+      "email": "github@2bad.me",
+      "url": "https://github.com/mrhyde"
+    }
+  ],
+  "type": "module",
+  "exports": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "prebuild": "rimraf build",
+    "build": "run-p build:*",
+    "postbuild": "tsfix",
+    "build:swc": "swc ./source -d ./build --strip-leading-paths",
+    "build:types": "tsc --project tsconfig.build.json",
+    "check": "run-p check:*",
+    "check:eslint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "check:biome": "biome check ./source",
+    "fix": "run-s fix:code fix:format",
+    "fix:code": "run-s 'check:eslint -- --fix'",
+    "fix:format": "biome format --write ./source",
+    "prepublishOnly": "run-s build",
+    "preversion": "run-s check test build",
+    "test": "vitest run",
+    "test:integration": "vitest run integration --coverage",
+    "test:unit": "vitest run unit --coverage"
+  },
+  "devDependencies": {
+    "@2bad/axiom": "1.0.0-beta.15",
+    "@2bad/tsconfig": "3.0.1",
+    "@2bad/tsfix": "1.1.1",
+    "@biomejs/biome": "1.9.4",
+    "@swc/cli": "0.6.0",
+    "@swc/core": "1.11.18",
+    "@types/node": "22.14.0",
+    "@vitest/coverage-v8": "3.1.1",
+    "npm-run-all2": "7.0.2",
+    "rimraf": "6.0.1",
+    "typescript": "5.8.3",
+    "vite-tsconfig-paths": "5.1.4",
+    "vitest": "3.1.1"
+  },
+  "packageManager": "npm@11.3.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "volta": {
+    "node": "22.14.0",
+    "npm": "11.2.0"
+  },
+  "dependencies": {
+    "crawlee": "3.13.2"
+  }
+}
