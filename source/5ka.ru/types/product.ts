@@ -128,3 +128,46 @@ export const DetailedProduct = z.object({
 })
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export type DetailedProduct = z.infer<typeof DetailedProduct>
+
+export const RecipeIngredient = z.object({
+  name: z.string(),
+  note: z.string().optional(),
+  amount: z.string().optional()
+})
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type RecipeIngredient = z.infer<typeof RecipeIngredient>
+
+export const RecipeStep = z.object({
+  text: z.string(),
+  imageUrl: z.string().url().optional()
+})
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type RecipeStep = z.infer<typeof RecipeStep>
+
+export const RecipeNutrition = z.object({
+  calories: z.string().optional(),
+  proteins: z.string().optional(),
+  fats: z.string().optional(),
+  carbohydrates: z.string().optional()
+})
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type RecipeNutrition = z.infer<typeof RecipeNutrition>
+
+export const Recipe = z.object({
+  id: z.string(),
+  url: z.string().url(),
+  name: z.string(),
+  description: z.string().optional(),
+  author: z.string().optional(),
+  publishDate: z.string().optional(),
+  views: z.number().optional(),
+  imageUrl: z.string().url().optional(),
+  cookingTime: z.string().optional(),
+  servings: z.string().optional(),
+  ingredients: z.array(RecipeIngredient),
+  steps: z.array(RecipeStep),
+  nutrition: RecipeNutrition.optional(),
+  tags: z.array(z.string()).optional()
+})
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type Recipe = z.infer<typeof Recipe>
