@@ -45,7 +45,8 @@ describe('extractIngredients', () => {
       amount: '950 г',
       notes: 'суповой набор',
       url: 'https://www.povarenok.ru/recipes/ingredient/1177/',
-      id: 1177
+      id: 1177,
+      section: null
     })
 
     expect(result[1]).toEqual({
@@ -53,7 +54,8 @@ describe('extractIngredients', () => {
       amount: '2 шт',
       notes: '300 грамм',
       url: 'https://www.povarenok.ru/recipes/ingredient/1608/',
-      id: 1608
+      id: 1608,
+      section: null
     })
 
     expect(result[2]).toEqual({
@@ -61,7 +63,8 @@ describe('extractIngredients', () => {
       amount: null,
       notes: 'для пассировки, плюс 2 ст.л. для тушения свеклы.',
       url: 'https://www.povarenok.ru/recipes/ingredient/1067/',
-      id: 1067
+      id: 1067,
+      section: null
     })
   })
 
@@ -93,7 +96,56 @@ describe('extractIngredients', () => {
       amount: 'по вкусу',
       notes: null,
       url: 'https://www.povarenok.ru/recipes/ingredient/1681/',
-      id: 1681
+      id: 1681,
+      section: null
+    })
+  })
+
+  it('should handle sectioned ingredient lists', () => {
+    const htmlWithSections = `
+      <div class="ingredients-bl">
+        <p><strong>First Section:</strong></p>
+        <ul>
+          <li itemprop="recipeIngredient">
+            <a href="https://www.povarenok.ru/recipes/ingredient/1177/">
+              <span>Мясо</span>
+            </a>
+            —
+            <span>100 г</span>
+          </li>
+        </ul>
+        <p><strong>Second Section</strong></p>
+        <ul>
+          <li itemprop="recipeIngredient">
+            <a href="https://www.povarenok.ru/recipes/ingredient/1608/">
+              <span>Свекла</span>
+            </a>
+            —
+            <span>200 г</span>
+          </li>
+        </ul>
+      </div>
+    `
+
+    const result = extractIngredients(htmlWithSections)
+
+    expect(result).toHaveLength(2)
+    expect(result[0]).toEqual({
+      name: 'Мясо',
+      amount: '100 г',
+      notes: null,
+      url: 'https://www.povarenok.ru/recipes/ingredient/1177/',
+      id: 1177,
+      section: 'First Section'
+    })
+
+    expect(result[1]).toEqual({
+      name: 'Свекла',
+      amount: '200 г',
+      notes: null,
+      url: 'https://www.povarenok.ru/recipes/ingredient/1608/',
+      id: 1608,
+      section: 'Second Section'
     })
   })
 })
