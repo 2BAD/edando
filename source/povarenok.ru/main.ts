@@ -2,9 +2,9 @@ import { CheerioCrawler } from 'crawlee'
 import { router } from './routes.ts'
 
 const crawler = new CheerioCrawler({
-  maxConcurrency: 2,
+  maxConcurrency: 5,
   sessionPoolOptions: {
-    maxPoolSize: 2
+    maxPoolSize: 5
   },
   requestHandler: router
 })

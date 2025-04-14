@@ -8,5 +8,6 @@
   "editor.formatOnSave": true,
   "eslint.workingDirectories": [{ "mode": "auto" }],
   "javascript.preferences.importModuleSpecifierEnding": "js",
-  "typescript.preferences.importModuleSpecifierEnding": "js"
+  "typescript.preferences.importModuleSpecifierEnding": "js",
+  "cSpell.words": ["povarenok"]
 }
